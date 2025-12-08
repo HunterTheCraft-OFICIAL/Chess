@@ -23,6 +23,7 @@ Desenvolver um jogo de xadrez para Android usando a biblioteca **LibGDX**, aprov
 
 ---
 
+ ```
 core/src/Chess/
 ├── board/
 │   └── ChessBoard.java
@@ -40,6 +41,7 @@ core/src/Chess/
 │   └── GameLogic.java
 └── ui/
     └── BoardRenderer.java
+   ```
 
 ---
 
