@@ -27,6 +27,9 @@ Estrutura atual do Xadrez:
 
  ```
 Xadrez/  
+  ./.github
+  ./.github/workflows
+  ./.github/workflows/build.yml
   ./core
   ./core/src
   ./core/src/chess
