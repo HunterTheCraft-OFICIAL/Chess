@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'com.chess.xadrez'
@@ -19,7 +20,16 @@ dependencies {
 sourceSets {
     main {
         java {
-            srcDirs = ["core/src/Chess"]
+            srcDirs = ["core/src/chess"]
         }
     }
+    test {
+        java {
+            srcDirs = ["tests"]
+        }
+    }
+}
+
+application {
+    mainClass = 'chess.Main'
 }

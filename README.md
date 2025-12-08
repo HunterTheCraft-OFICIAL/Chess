@@ -23,25 +23,35 @@ Desenvolver um jogo de xadrez para Android usando a biblioteca **LibGDX**, aprov
 
 ---
 
+Estrutura atual do Xadrez:
+
  ```
-core/src/Chess/
-├── board/
-│   └── ChessBoard.java
-├── pieces/
-│   ├── Piece.java
-│   ├── Pawn.java
-│   ├── Rook.java
-│   ├── Knight.java
-│   ├── Bishop.java
-│   ├── Queen.java
-│   └── King.java
-├── moves/
-│   └── Move.java
-├── game/
-│   └── GameLogic.java
-└── ui/
-    └── BoardRenderer.java
-   ```
+Xadrez/  
+  ./core
+  ./core/src
+  ./core/src/chess
+  ./core/src/chess/board
+  ./core/src/chess/board/ChessBoard.java
+  ./core/src/chess/game
+  ./core/src/chess/game/GameLogic.java
+  ./core/src/chess/moves
+  ./core/src/chess/moves/Move.java
+  ./core/src/chess/pieces
+  ./core/src/chess/pieces/Bishop.java
+  ./core/src/chess/pieces/King.java
+  ./core/src/chess/pieces/Knight.java
+  ./core/src/chess/pieces/Pawn.java
+  ./core/src/chess/pieces/Piece.java
+  ./core/src/chess/pieces/Queen.java
+  ./core/src/chess/pieces/Rook.java
+  ./core/src/chess/ui
+  ./core/src/chess/ui/BoardRenderer.java
+  ./core/src/chess/Main.java
+  ./tests
+  ./tests/ChessBoardTest.java
+  ./.gitignore
+  ./build.gradle
+  ./README.md
+ ```
 
 ---
-
