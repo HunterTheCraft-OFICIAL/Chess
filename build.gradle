@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.xadrez'
+version = '1.0'
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["core/src/Chess"]
+        }
+    }
+}
