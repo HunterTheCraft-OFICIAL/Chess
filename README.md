@@ -50,6 +50,10 @@ Xadrez/
   ./core/src/chess/ui
   ./core/src/chess/ui/BoardRenderer.java
   ./core/src/chess/Main.java
+  ./gradle
+  ./gradle/wrapper
+  ./gradle/wrapper/gradle-wrapper.jar
+  ./gradle/wrapper/gradle-wrapper.properties
   ./tests
   ./tests/ChessBoardTest.java
   ./.gitignore
