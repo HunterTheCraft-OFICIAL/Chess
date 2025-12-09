@@ -21,6 +21,7 @@ Desenvolver um jogo de xadrez para Android usando a biblioteca **LibGDX**, aprov
 3. Implementar regras de movimento.  
 4. Evoluir para IA ou multiplayer.
 
+
 ---
 
 Estrutura atual do Xadrez:
