@@ -24,6 +24,7 @@ Desenvolver um jogo de xadrez para Android usando a biblioteca **LibGDX**, aprov
 
 ---
 
+
 Estrutura atual do Xadrez:
 
  ```
