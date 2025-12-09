@@ -1,0 +1,39 @@
+name: Feature request
+description: Sugerir uma nova funcionalidade ou melhoria para o Chess
+labels: ["enhancement"]
+
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivação
+      description: Explique qual problema ou necessidade essa funcionalidade resolveria.
+      placeholder: Ex.: Facilitar partidas online, melhorar interface gráfica...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta
+      description: Descreva a funcionalidade ou melhoria que você gostaria de ver implementada.
+      placeholder: Ex.: Adicionar suporte a partidas multiplayer via rede local.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+      description: Liste outras soluções ou ideias que poderiam atender à mesma necessidade.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: agreement
+    attributes:
+      label: Confirmações
+      description: Marque as opções abaixo.
+      options:
+        - label: Verifiquei que esta sugestão não foi feita em issues abertas ou fechadas.
+          required: true

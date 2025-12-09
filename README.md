@@ -28,8 +28,16 @@ Estrutura atual do Xadrez:
  ```
 Xadrez/  
   ./.github
+  ./.github/ISSUE_TEMPLATE
+  ./.github/ISSUE_TEMPLATE/bug_report.yml
+  ./.github/ISSUE_TEMPLATE/config.yml
+  ./.github/ISSUE_TEMPLATE/feature_request.yml
   ./.github/workflows
-  ./.github/workflows/build.yml
+  ./.github/workflows/build-pr.yml
+  ./.github/workflows/gradle-wrapper-validation.yml
+  ./.github/workflows/push.yml
+  ./.github/workflows/release.yml
+  ./.github/pull_request_template.md
   ./core
   ./core/src
   ./core/src/chess

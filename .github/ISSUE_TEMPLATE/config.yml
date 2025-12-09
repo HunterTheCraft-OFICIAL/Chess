@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Perguntas gerais
+    url: https://github.com/HunterTheCraft-OFICIAL/chess/discussions
+    about: Use a aba "Discussions" para dúvidas ou perguntas gerais, não abra issue.
+  - name: Solicitação de recurso
+    url: https://github.com/HunterTheCraft-OFICIAL/chess/issues/new?template=feature_request.yml
+    about: Use o template de feature request para sugerir melhorias.
