@@ -67,7 +67,11 @@ Xadrez/
   ./tests/ChessBoardTest.java
   ./.gitignore
   ./build.gradle
+  ./gradle.properties
+  ./gradlew
+  ./gradlew.bat
   ./README.md
+  ./settings.gradle
  ```
 
 ---
