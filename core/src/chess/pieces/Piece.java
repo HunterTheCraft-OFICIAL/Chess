@@ -1,4 +1,4 @@
-package Chess.pieces;
+package chess.pieces;
 
 public abstract class Piece {
     protected String color; // "white" ou "black"
