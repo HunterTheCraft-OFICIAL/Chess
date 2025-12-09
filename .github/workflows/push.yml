@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -25,6 +26,10 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: gradle
+      - name: Grant execute permission for Gradlew
+      run: chmod +x gradlew
+      - name: Build with Gradle
+  run: ./gradlew build test --stacktrace --no-daemon
 
       - name: Verify Gradle wrapper
         uses: gradle/wrapper-validation-action@v2
