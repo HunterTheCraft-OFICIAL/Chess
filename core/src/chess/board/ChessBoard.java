@@ -1,6 +1,6 @@
-package Chess.board;
+package chess.board;
 
-import Chess.pieces.*;
+import chess.pieces.*;
 
 public class ChessBoard {
     private Piece[][] board;

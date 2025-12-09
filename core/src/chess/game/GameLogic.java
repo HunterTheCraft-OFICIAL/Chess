@@ -1,7 +1,7 @@
-package Chess.game;
+package chess.game;
 
-import Chess.board.ChessBoard;
-import Chess.moves.Move;
+import chess.board.ChessBoard;
+import chess.moves.Move;
 
 public class GameLogic {
     private ChessBoard board;

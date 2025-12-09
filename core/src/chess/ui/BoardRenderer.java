@@ -1,6 +1,6 @@
-package Chess.ui;
+package chess.ui;
 
-import Chess.board.ChessBoard;
+import chess.board.ChessBoard;
 
 public class BoardRenderer {
     public void render(ChessBoard board) {

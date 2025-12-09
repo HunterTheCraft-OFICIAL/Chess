@@ -1,4 +1,4 @@
-package Chess.moves;
+package chess.moves;
 
 public class Move {
     private int fromRow, fromCol;
