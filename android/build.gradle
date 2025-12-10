@@ -3,18 +3,25 @@ plugins {
 }
 
 android {
-    namespace "com.chess.xadrez"
-    compileSdkVersion 34
+    namespace "com.chess.android"
+    compileSdk 34
 
     defaultConfig {
-        applicationId "com.chess.xadrez"
-        minSdkVersion 21
-        targetSdkVersion 34
+        applicationId "com.chess.android"
+        minSdk 21
+        targetSdk 34
         versionCode 1
         versionName "1.0"
-
-        multiDexEnabled true
     }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+        }
+    }
+}
 
     buildTypes {
         release {
