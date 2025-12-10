@@ -2,15 +2,29 @@ plugins {
     id 'java-library'
 }
 
+group = "chess"
+version = "1.0"
+
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
     // Biblioteca de testes padrão
     testImplementation "junit:junit:4.13.2"
 
-    // Se os testes precisarem acessar classes do core
+    // Permite acessar classes do núcleo do jogo
     implementation project(":core")
+}
+
+test {
+    useJUnit() // garante execução com JUnit 4
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
