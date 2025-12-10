@@ -23,10 +23,13 @@ version = "1.0"
 
 // Compatibilidade Java global
 subprojects {
-    apply plugin: "java-library"
+    // Aplica java-library apenas nos módulos que não são Android
+    if (name != "android") {
+        apply plugin: "java-library"
 
-    java {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        java {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
+        }
     }
 }
