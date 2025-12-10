@@ -32,7 +32,8 @@ jobs:
       - name: Verify Gradle wrapper
         uses: gradle/wrapper-validation-action@v2
 
-      - name: Build and test
+      # Build núcleo (JAR)
+      - name: Build and test core
         run: ./gradlew build test --stacktrace --no-daemon
 
       - name: Upload JAR artifact
@@ -41,4 +42,16 @@ jobs:
         with:
           name: chess-jar
           path: build/libs/*.jar
+          retention-days: 14
+
+      # Build Android (APK)
+      - name: Build Android APK (Debug)
+        run: ./gradlew :android:assembleDebug --stacktrace --no-daemon
+
+      - name: Upload APK artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chess-apk
+          path: android/build/outputs/apk/debug/android-debug.apk
           retention-days: 14
