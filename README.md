@@ -108,11 +108,13 @@ Xadrez/
   ./core/src/chess/ui
   ./core/src/chess/ui/BoardRenderer.java
   ./core/src/chess/Main.java
+  ./core/src/build.gradle
   ./gradle
   ./gradle/wrapper
   ./gradle/wrapper/gradle-wrapper.jar
   ./gradle/wrapper/gradle-wrapper.properties
   ./tests
+  ./tests/build.gradle
   ./tests/ChessBoardTest.java
   ./.gitignore
   ./build.gradle
