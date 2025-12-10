@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Inclui apenas saves das partidas -->
+    <include domain="file" path="saves/"/>
+
+    <!-- Exclui cache e arquivos temporários -->
+    <exclude domain="file" path="cache/"/>
+    <exclude domain="file" path="temp/"/>
+</full-backup-content>
