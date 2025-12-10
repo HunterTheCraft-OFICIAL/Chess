@@ -20,7 +20,8 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                          'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
@@ -36,5 +37,4 @@ android {
 dependencies {
     implementation project(":core")
     // Dependências extras só se forem necessárias
-    // Exemplo: multiplayer, bibliotecas gráficas, etc.
 }
