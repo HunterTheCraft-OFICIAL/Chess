@@ -9,17 +9,17 @@ buildscript {
     }
 }
 
+// Depois os plugins
+plugins {
+    id 'java'
+    id 'application'
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
-}
-
-// Depois os plugins
-plugins {
-    id 'java'
-    id 'application'
 }
 
 group = 'com.chess.xadrez'
