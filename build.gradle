@@ -1,3 +1,22 @@
+// Primeiro o buildscript
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.3.2"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Depois os plugins
 plugins {
     id 'java'
     id 'application'
@@ -33,22 +52,4 @@ sourceSets {
 
 application {
     mainClass = 'chess.Main'
-}
-
-// Configuração para o Android Gradle Plugin
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:8.3.2"
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
 }
