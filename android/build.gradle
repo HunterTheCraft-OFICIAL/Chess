@@ -12,30 +12,14 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
-    }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
-                          'proguard-rules.pro'
-        }
-        debug {
             minifyEnabled false
-        }
-    }
-
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            res.srcDirs = ['res']
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -43,12 +27,22 @@ android {
 dependencies {
     implementation project(":core")
 
-    // LibGDX núcleo + backend Android
+    // LibGDX núcleo e backend Android
     implementation "com.badlogicgames.gdx:gdx:1.12.0"
     implementation "com.badlogicgames.gdx:gdx-backend-android:1.12.0"
+
+    // Dependência extra que você já tinha
+    implementation "org.mozilla:rhino:1.7.14"
+
+    // AndroidX (necessário para compatibilidade)
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
 
     // Rhino (JavaScript engine usado pelo AndroidRhinoContext)
     implementation "org.mozilla:rhino:1.7.14"
 
-    // Dependências extras só se forem necessárias (AndroidX, etc.)
+    // Testes Android
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }

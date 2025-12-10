@@ -1,58 +1,44 @@
 package chess.board;
 
-import chess.pieces.*;
-
 public class ChessBoard {
-    private Piece[][] board;
+    private final int rows = 8;
+    private final int cols = 8;
+    private char[][] board;
 
     public ChessBoard() {
-        board = new Piece[8][8]; // tabuleiro 8x8
-        setupBoard();
+        board = new char[rows][cols];
+        initializeBoard();
     }
 
-    private void setupBoard() {
-        // Peões
-        for (int col = 0; col < 8; col++) {
-            board[6][col] = new Pawn("white");
-            board[1][col] = new Pawn("black");
+    private void initializeBoard() {
+        // Inicializa todas as casas como vazias
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                board[row][col] = '.';
+            }
         }
 
-        // Torres
-        board[7][0] = new Rook("white");
-        board[7][7] = new Rook("white");
-        board[0][0] = new Rook("black");
-        board[0][7] = new Rook("black");
+        // Exemplo simples: colocar peões
+        for (int col = 0; col < cols; col++) {
+            board[1][col] = 'P'; // Peões brancos
+            board[6][col] = 'p'; // Peões pretos
+        }
 
-        // Cavalos
-        board[7][1] = new Knight("white");
-        board[7][6] = new Knight("white");
-        board[0][1] = new Knight("black");
-        board[0][6] = new Knight("black");
-
-        // Bispos
-        board[7][2] = new Bishop("white");
-        board[7][5] = new Bishop("white");
-        board[0][2] = new Bishop("black");
-        board[0][5] = new Bishop("black");
-
-        // Rainhas
-        board[7][3] = new Queen("white");
-        board[0][3] = new Queen("black");
-
-        // Reis
-        board[7][4] = new King("white");
-        board[0][4] = new King("black");
+        // Exemplo simples: colocar torres
+        board[0][0] = board[0][7] = 'R'; // Torres brancas
+        board[7][0] = board[7][7] = 'r'; // Torres pretas
     }
 
-    public Piece getPiece(int row, int col) {
-        return board[row][col];
+    public char[][] getBoard() {
+        return board;
     }
 
-    public void movePiece(int fromRow, int fromCol, int toRow, int toCol) {
-        Piece piece = board[fromRow][fromCol];
-        if (piece != null && piece.isValidMove(fromRow, fromCol, toRow, toCol)) {
-            board[toRow][toCol] = piece;
-            board[fromRow][fromCol] = null;
+    public void printBoard() {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                System.out.print(board[row][col] + " ");
+            }
+            System.out.println();
         }
     }
 }

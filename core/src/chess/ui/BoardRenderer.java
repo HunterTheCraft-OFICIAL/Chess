@@ -1,15 +1,4 @@
-/*package chess.ui;
-
-import chess.board.ChessBoard;
-
-public class BoardRenderer {
-    public void render(ChessBoard board) {
-        // TODO: imprimir ou desenhar tabuleiro
-    }
-}
-//*/
-
-package chess;
+package chess.ui;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
