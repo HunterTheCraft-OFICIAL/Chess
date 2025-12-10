@@ -1,5 +1,4 @@
 plugins {
-    id 'java'
     id 'java-library'
 }
 
@@ -11,7 +10,7 @@ java {
 sourceSets {
     main {
         java {
-            srcDirs = ["src/"]
+            srcDirs = ["src"]
         }
     }
     test {
@@ -23,8 +22,8 @@ sourceSets {
 
 dependencies {
     // Núcleo do LibGDX (necessário para ApplicationAdapter, Gdx, ShapeRenderer, Color, etc.)
-    implementation "com.badlogicgames.gdx:gdx:1.12.0"
+    api "com.badlogicgames.gdx:gdx:1.12.0"
 
     // Biblioteca de testes
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation "junit:junit:4.13.2"
 }

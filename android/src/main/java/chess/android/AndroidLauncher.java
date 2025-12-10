@@ -1,10 +1,9 @@
-//package chess.android;
-package com.chess.xadrez;
+package chess.android;
 
 import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.chess.xadrez.core.ChessGame; // ajuste para o nome da sua classe principal
+import chess.ChessGame;
 
 public class AndroidLauncher extends AndroidApplication {
     @Override
@@ -12,9 +11,10 @@ public class AndroidLauncher extends AndroidApplication {
         super.onCreate(savedInstanceState);
 
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+
+        // Configurações opcionais
         config.useImmersiveMode = true;   // tela cheia
-        config.hideStatusBar = true;      // sem barra de status
-        config.useGL30 = true;            // usa OpenGL ES 3.0
+        config.useGL30 = false;           // OpenGL ES 3.0 (false por padrão, true só se necessário)
 
         // Inicializa o núcleo do jogo
         initialize(new ChessGame(), config);

@@ -7,4 +7,8 @@ pluginManagement {
 }
 
 rootProject.name = "Chess"
-include(":core", ":android", ":tests")
+
+// Inclui os módulos do projeto
+include(":core")
+include(":android")
+include(":tests")

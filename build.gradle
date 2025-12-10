@@ -1,4 +1,4 @@
-// Primeiro o buildscript
+// Configuração do buildscript para Android
 buildscript {
     repositories {
         google()
@@ -9,12 +9,7 @@ buildscript {
     }
 }
 
-// Depois os plugins
-plugins {
-    id 'java'
-    id 'application'
-}
-
+// Repositórios globais para todos os módulos
 allprojects {
     repositories {
         google()
@@ -22,34 +17,16 @@ allprojects {
     }
 }
 
-group = 'com.chess.xadrez'
-version = '1.0'
+// Informações do projeto
+group = "chess"
+version = "1.0"
 
-sourceCompatibility = '17'
-targetCompatibility = '17'
+// Compatibilidade Java global
+subprojects {
+    apply plugin: "java-library"
 
-repositories {
-    google()
-    mavenCentral()
-}
-
-dependencies {
-    testImplementation 'junit:junit:4.13.2'
-}
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ["core/src/chess"]
-        }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    test {
-        java {
-            srcDirs = ["tests"]
-        }
-    }
-}
-
-application {
-    mainClass = 'chess.Main'
 }

@@ -2,7 +2,7 @@
 -dontobfuscate
 
 # Manter todas as classes do núcleo do jogo de Xadrez
--keep class com.chess.xadrez.** { *; }
+-keep class chess.** { *; }
 
 # Preservar atributos importantes
 -keepattributes Signature,*Annotation*,InnerClasses,EnclosingMethod

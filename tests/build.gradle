@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
 }
 
 java {
@@ -8,5 +8,9 @@ java {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.13.2'
+    // Biblioteca de testes padrão
+    testImplementation "junit:junit:4.13.2"
+
+    // Se os testes precisarem acessar classes do core
+    implementation project(":core")
 }
