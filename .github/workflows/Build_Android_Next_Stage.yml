@@ -38,21 +38,21 @@ jobs:
       - name: Verify Gradle wrapper
         uses: gradle/wrapper-validation-action@v2
 
-      # Compilação do APK Debug
+      # Compilação do APK Debug com logs completos
       - name: Build Android APK (Debug)
-        run: ./gradlew :android:assembleDebug --stacktrace --no-daemon
+        run: ./gradlew :android:assembleDebug --stacktrace --warning-mode all --info --scan --no-daemon
 
-      # Testes unitários
+      # Testes unitários com logs completos
       - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest --stacktrace --no-daemon
+        run: ./gradlew testDebugUnitTest --stacktrace --warning-mode all --info --scan --no-daemon
 
       # Lint para verificar problemas de código/estilo
       - name: Run Android Lint
-        run: ./gradlew lintDebug --stacktrace --no-daemon
+        run: ./gradlew lintDebug --stacktrace --warning-mode all --info --scan --no-daemon
 
       # Relatório pós-compilação (task chessSummary definida no build.gradle)
       - name: Run Chess Summary Task
-        run: ./gradlew chessSummary --stacktrace --no-daemon
+        run: ./gradlew chessSummary --stacktrace --warning-mode all --info --scan --no-daemon
 
       # Checagem da versão LibGDX
       - name: Check LibGDX Version
@@ -86,4 +86,15 @@ jobs:
         with:
           name: chess-apk-summary-next
           path: build/reports/chess-summary.txt
+          retention-days: 14
+
+      # Publicação dos logs completos
+      - name: Upload Gradle Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-logs
+          path: |
+            **/build/reports/
+            **/build/outputs/logs/
           retention-days: 14
