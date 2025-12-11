@@ -6,7 +6,9 @@ buildscript {
     }
     dependencies {
         // Atualizado para AGP 9.0.0
-        classpath "com.android.tools.build:gradle:9.0.0"
+        //classpath "com.android.tools.build:gradle:9.0.0"
+        // Mantém o AGP em 8.3.2 por enquanto
+        classpath "com.android.tools.build:gradle:8.3.2"
     }
 }
 
