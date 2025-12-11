@@ -4,7 +4,6 @@ on:
 #  workflow_dispatch:
   push:
 
-
 permissions:
   contents: read
 
@@ -25,18 +24,16 @@ jobs:
       - name: Grant execute permission for Gradlew
         run: chmod +x gradlew
 
-      # Atualiza o wrapper para Gradle 9.0
       - name: Update Gradle Wrapper
         run: ./gradlew wrapper --gradle-version=9.0 --distribution-type=bin
 
-      # Publica os arquivos do wrapper como artefato
-- name: Upload Gradle Wrapper artifacts
-  uses: actions/upload-artifact@v4
-  with:
-    name: gradle-wrapper-9.0
-    path: |
-      gradlew
-      gradlew.bat
-      gradle/wrapper/gradle-wrapper.properties
-      gradle/wrapper/gradle-wrapper.jar
-    retention-days: 30
+      - name: Upload Gradle Wrapper artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-wrapper-9.0
+          path: |
+            gradlew
+            gradlew.bat
+            gradle/wrapper/gradle-wrapper.properties
+            gradle/wrapper/gradle-wrapper.jar
+          retention-days: 30
