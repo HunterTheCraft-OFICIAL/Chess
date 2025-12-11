@@ -12,9 +12,12 @@ public class AndroidLauncher extends AndroidApplication {
 
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 
-        // Configurações opcionais
+        // Configurações recomendadas
         config.useImmersiveMode = true;   // tela cheia
-        config.useGL30 = false;           // OpenGL ES 3.0 (false por padrão, true só se necessário)
+        config.useGL30 = false;           // força OpenGL ES 2.0 (mais compatível)
+        config.disableAudio = false;      // mantém áudio ativo (se não usar, pode ser true)
+        config.useCompass = false;        // desativa sensores não usados
+        config.useAccelerometer = false;  // desativa sensores não usados
 
         // Inicializa o núcleo do jogo
         initialize(new ChessGame(), config);
