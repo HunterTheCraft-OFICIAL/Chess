@@ -36,18 +36,23 @@ jobs:
       - name: Build Android APK (Debug)
         run: ./gradlew :android:assembleDebug --stacktrace --no-daemon
 
-      # Gera resumo do APK (tamanho e libs nativas)
+      # Gera resumo do APK (console + arquivo)
       - name: APK Summary
         run: |
           APK_PATH="android/build/outputs/apk/debug/android-debug.apk"
+          REPORT_DIR="build/reports"
+          REPORT_FILE="$REPORT_DIR/chess-summary.txt"
+          mkdir -p "$REPORT_DIR"
+
           if [ -f "$APK_PATH" ]; then
             SIZE=$(du -h "$APK_PATH" | cut -f1)
-            echo "=== Chess Build Summary ==="
-            echo "📦 APK: $APK_PATH"
-            echo "📏 Tamanho: $SIZE"
-            unzip -l "$APK_PATH" | grep libgdx.so || echo "⚠️ Nenhum libgdx.so encontrado!"
+            echo "=== Chess Build Summary ===" | tee "$REPORT_FILE"
+            echo "📦 APK: $APK_PATH" | tee -a "$REPORT_FILE"
+            echo "📏 Tamanho: $SIZE" | tee -a "$REPORT_FILE"
+            echo "🔍 Bibliotecas nativas incluídas:" | tee -a "$REPORT_FILE"
+            unzip -l "$APK_PATH" | grep libgdx.so | tee -a "$REPORT_FILE" || echo "⚠️ Nenhum libgdx.so encontrado!" | tee -a "$REPORT_FILE"
           else
-            echo "❌ APK não encontrado!"
+            echo "❌ APK não encontrado!" | tee "$REPORT_FILE"
           fi
 
       # Publica o APK como artefato
@@ -65,5 +70,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: chess-apk-summary
-          path: build/reports
+          path: build/reports/chess-summary.txt
           retention-days: 14
