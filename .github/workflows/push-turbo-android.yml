@@ -36,7 +36,7 @@ jobs:
       - name: Build Android APK (Debug)
         run: ./gradlew :android:assembleDebug --stacktrace --no-daemon
 
-      # Gera resumo do APK (console + arquivo)
+      # Gera resumo do APK (console + arquivo + anotação)
       - name: APK Summary
         run: |
           APK_PATH="android/build/outputs/apk/debug/android-debug.apk"
@@ -50,9 +50,18 @@ jobs:
             echo "📦 APK: $APK_PATH" | tee -a "$REPORT_FILE"
             echo "📏 Tamanho: $SIZE" | tee -a "$REPORT_FILE"
             echo "🔍 Bibliotecas nativas incluídas:" | tee -a "$REPORT_FILE"
-            unzip -l "$APK_PATH" | grep libgdx.so | tee -a "$REPORT_FILE" || echo "⚠️ Nenhum libgdx.so encontrado!" | tee -a "$REPORT_FILE"
+
+            NATIVES=$(unzip -l "$APK_PATH" | grep libgdx.so)
+            if [ -n "$NATIVES" ]; then
+              echo "$NATIVES" | tee -a "$REPORT_FILE"
+              echo "::notice::LibGDX nativos encontrados no APK ✅"
+            else
+              echo "⚠️ Nenhum libgdx.so encontrado!" | tee -a "$REPORT_FILE"
+              echo "::warning::APK gerado sem bibliotecas nativas ⚠️"
+            fi
           else
             echo "❌ APK não encontrado!" | tee "$REPORT_FILE"
+            echo "::error::Falha: APK não foi gerado!"
           fi
 
       # Publica o APK como artefato
