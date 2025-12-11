@@ -14,9 +14,13 @@ public class ChessGame extends ApplicationAdapter {
 
     @Override
     public void create() {
-        // Inicializa o renderizador do tabuleiro
-        boardRenderer = new BoardRenderer();
-        Gdx.app.log("ChessGame", "Tabuleiro inicial pronto!");
+        try {
+            // Inicializa o renderizador do tabuleiro
+            boardRenderer = new BoardRenderer();
+            Gdx.app.log("ChessGame", "Tabuleiro inicial pronto!");
+        } catch (Exception e) {
+            Gdx.app.error("ChessGame", "Erro ao inicializar BoardRenderer", e);
+        }
     }
 
     @Override
@@ -25,12 +29,16 @@ public class ChessGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Atualiza lógica do jogo (se necessário futuramente)
+        // Atualiza lógica do jogo
         update();
 
         // Desenha o tabuleiro
         if (boardRenderer != null) {
-            boardRenderer.render();
+            try {
+                boardRenderer.render();
+            } catch (Exception e) {
+                Gdx.app.error("ChessGame", "Erro ao renderizar tabuleiro", e);
+            }
         }
     }
 
@@ -45,9 +53,13 @@ public class ChessGame extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        // Libera recursos do renderizador
         if (boardRenderer != null) {
-            boardRenderer.dispose();
+            try {
+                boardRenderer.dispose();
+                Gdx.app.log("ChessGame", "Recursos liberados com sucesso!");
+            } catch (Exception e) {
+                Gdx.app.error("ChessGame", "Erro ao liberar recursos", e);
+            }
             boardRenderer = null;
         }
     }
