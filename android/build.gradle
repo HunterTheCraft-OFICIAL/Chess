@@ -31,6 +31,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
+    // 🔑 Garantir inclusão dos nativos no APK
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs', 'src/main/jniLibs']
+        }
+    }
 }
 
 repositories {

@@ -1,0 +1,36 @@
+name: Build (libGDX APK)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Configurar JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Instalar Gradle
+      uses: gradle/gradle-build-action@v2
+
+    - name: Compilar projeto
+      run: ./gradlew build
+
+    - name: Gerar APK
+      run: ./gradlew android:assembleDebug
+
+    - name: Publicar artefato
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-apk
+        path: android/build/outputs/apk/debug/*.apk

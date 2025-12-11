@@ -44,35 +44,9 @@ jobs:
       - name: Run Android Lint
         run: ./gradlew lintDebug --stacktrace --no-daemon
 
-      # Gera resumo do APK (console + arquivo + anotação)
-      - name: APK Summary
-        run: |
-          APK_PATH="android/build/outputs/apk/debug/android-debug.apk"
-          REPORT_DIR="build/reports"
-          REPORT_FILE="$REPORT_DIR/chess-summary.txt"
-          mkdir -p "$REPORT_DIR"
-
-          if [ -f "$APK_PATH" ]; then
-            SIZE=$(du -h "$APK_PATH" | cut -f1)
-            echo "=== Chess Build Summary ===" | tee "$REPORT_FILE"
-            echo "📦 APK: $APK_PATH" | tee -a "$REPORT_FILE"
-            echo "📏 Tamanho: $SIZE" | tee -a "$REPORT_FILE"
-            echo "🔍 Bibliotecas nativas incluídas:" | tee -a "$REPORT_FILE"
-
-            NATIVES=$(unzip -l "$APK_PATH" | grep libgdx.so)
-            if [ -n "$NATIVES" ]; then
-              echo "$NATIVES" | tee -a "$REPORT_FILE"
-              echo "::notice::LibGDX nativos encontrados no APK ✅"
-            else
-              echo "❌ Nenhum libgdx.so encontrado!" | tee -a "$REPORT_FILE"
-              echo "::error::APK gerado sem bibliotecas nativas"
-              exit 1
-            fi
-          else
-            echo "❌ APK não encontrado!" | tee "$REPORT_FILE"
-            echo "::error::Falha: APK não foi gerado!"
-            exit 1
-          fi
+      # Executa a task chessSummary (relatório pós-compilação)
+      - name: Run Chess Summary Task
+        run: ./gradlew chessSummary --stacktrace --no-daemon
 
       # Checa versão do LibGDX usada vs. mais recente
       - name: Check LibGDX Version
