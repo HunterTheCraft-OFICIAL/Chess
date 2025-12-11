@@ -5,7 +5,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:8.3.2"
+        // Atualizado para AGP 9.0.0
+        classpath "com.android.tools.build:gradle:9.0.0"
     }
 }
 
@@ -14,6 +15,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // opcional: snapshots se necessário
+        // maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 }
 

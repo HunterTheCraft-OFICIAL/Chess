@@ -1,0 +1,38 @@
+name: Gradle Wrapper Update
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update-wrapper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Temurin JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
+
+      # Atualiza o wrapper para Gradle 9.0
+      - name: Update Gradle Wrapper
+        run: ./gradlew wrapper --gradle-version=9.0 --distribution-type=bin
+
+      # Publica os arquivos do wrapper como artefato
+      - name: Upload Gradle Wrapper artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-wrapper-9.0
+          path: |
+            gradle/wrapper/gradle-wrapper.properties
+            gradle/wrapper/gradle-wrapper.jar
+          retention-days: 30
