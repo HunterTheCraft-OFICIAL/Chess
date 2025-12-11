@@ -1,0 +1,93 @@
+name: Build (Android Push Turbo Latest)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-latest-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android-build-latest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Temurin JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
+
+      - name: Verify Gradle wrapper
+        uses: gradle/wrapper-validation-action@v2
+
+      # Força a versão mais recente do LibGDX
+      - name: Override LibGDX Version
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+          LATEST_VERSION=$(curl -s "https://search.maven.org/solrsearch/select?q=g:%22com.badlogicgames.gdx%22+AND+a:%22gdx-platform%22&rows=1&wt=json" \
+            | jq -r '.response.docs[0].latestVersion')
+          echo "Forçando LibGDX para versão $LATEST_VERSION"
+          sed -i "s/^gdxVersion=.*/gdxVersion=$LATEST_VERSION/" gradle.properties
+
+      # Compila o APK com a versão mais recente
+      - name: Build Android APK (Latest LibGDX)
+        run: ./gradlew :android:assembleDebug --stacktrace --no-daemon
+
+      # Gera resumo do APK
+      - name: APK Summary
+        run: |
+          APK_PATH="android/build/outputs/apk/debug/android-debug.apk"
+          REPORT_DIR="build/reports"
+          REPORT_FILE="$REPORT_DIR/chess-summary-latest.txt"
+          mkdir -p "$REPORT_DIR"
+
+          if [ -f "$APK_PATH" ]; then
+            SIZE=$(du -h "$APK_PATH" | cut -f1)
+            echo "=== Chess Build Summary (Latest LibGDX) ===" | tee "$REPORT_FILE"
+            echo "📦 APK: $APK_PATH" | tee -a "$REPORT_FILE"
+            echo "📏 Tamanho: $SIZE" | tee -a "$REPORT_FILE"
+            echo "🔍 Bibliotecas nativas incluídas:" | tee -a "$REPORT_FILE"
+
+            NATIVES=$(unzip -l "$APK_PATH" | grep libgdx.so)
+            if [ -n "$NATIVES" ]; then
+              echo "$NATIVES" | tee -a "$REPORT_FILE"
+              echo "::notice::LibGDX nativos encontrados no APK ✅"
+            else
+              echo "❌ Nenhum libgdx.so encontrado!" | tee -a "$REPORT_FILE"
+              echo "::error::APK gerado sem bibliotecas nativas"
+              exit 1
+            fi
+          else
+            echo "❌ APK não encontrado!" | tee "$REPORT_FILE"
+            echo "::error::Falha: APK não foi gerado!"
+            exit 1
+          fi
+
+      # Publica o APK como artefato
+      - name: Upload APK artifact (Latest)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chess-apk-latest
+          path: android/build/outputs/apk/debug/android-debug.apk
+          retention-days: 14
+
+      # Publica o resumo como artefato separado
+      - name: Upload Build Summary (Latest)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chess-apk-summary-latest
+          path: build/reports/chess-summary-latest.txt
+          retention-days: 14
