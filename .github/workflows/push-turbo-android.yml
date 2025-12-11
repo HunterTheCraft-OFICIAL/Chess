@@ -56,12 +56,14 @@ jobs:
               echo "$NATIVES" | tee -a "$REPORT_FILE"
               echo "::notice::LibGDX nativos encontrados no APK ✅"
             else
-              echo "⚠️ Nenhum libgdx.so encontrado!" | tee -a "$REPORT_FILE"
-              echo "::warning::APK gerado sem bibliotecas nativas ⚠️"
+              echo "❌ Nenhum libgdx.so encontrado!" | tee -a "$REPORT_FILE"
+              echo "::error::APK gerado sem bibliotecas nativas"
+              exit 1
             fi
           else
             echo "❌ APK não encontrado!" | tee "$REPORT_FILE"
             echo "::error::Falha: APK não foi gerado!"
+            exit 1
           fi
 
       # Checa versão do LibGDX usada vs. mais recente (vai para o mesmo resumo)
@@ -83,7 +85,7 @@ jobs:
 
       # Publica o APK como artefato
       - name: Upload APK artifact
-        if: success()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: chess-apk
@@ -92,7 +94,7 @@ jobs:
 
       # Publica o resumo como artefato separado (já com info da versão)
       - name: Upload Build Summary
-        if: success()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: chess-apk-summary

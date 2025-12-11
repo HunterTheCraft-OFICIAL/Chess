@@ -64,18 +64,21 @@ jobs:
               echo "$NATIVES" | tee -a "$REPORT_FILE"
               echo "::notice::LibGDX nativos encontrados no APK ✅"
             else
-              echo "⚠️ Nenhum libgdx.so encontrado!" | tee -a "$REPORT_FILE"
-              echo "::warning::APK gerado sem bibliotecas nativas ⚠️"
+              echo "❌ Nenhum libgdx.so encontrado!" | tee -a "$REPORT_FILE"
+              echo "::error::APK gerado sem bibliotecas nativas"
+              exit 1
             fi
           else
             echo "❌ APK não encontrado!" | tee "$REPORT_FILE"
             echo "::error::Falha: APK não foi gerado!"
+            exit 1
           fi
 
       # Checa versão do LibGDX usada vs. mais recente
       - name: Check LibGDX Version
         run: |
-          USED_VERSION=$(grep "gdxVersion" gradle.properties | cut -d'=' -f2)
+          sudo apt-get update && sudo apt-get install -y jq
+          USED_VERSION=$(grep -m1 "gdxVersion" gradle.properties | cut -d'=' -f2 || echo "desconhecida")
           LATEST_VERSION=$(curl -s "https://search.maven.org/solrsearch/select?q=g:%22com.badlogicgames.gdx%22+AND+a:%22gdx-platform%22&rows=1&wt=json" \
             | jq -r '.response.docs[0].latestVersion')
 
@@ -90,7 +93,7 @@ jobs:
 
       # Publica o APK como artefato
       - name: Upload APK artifact
-        if: success()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: chess-apk-pro
@@ -99,7 +102,7 @@ jobs:
 
       # Publica o resumo como artefato separado
       - name: Upload Build Summary
-        if: success()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: chess-apk-summary-pro
