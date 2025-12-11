@@ -12,3 +12,7 @@ rootProject.name = "Chess"
 include(":core")
 include(":android")
 include(":tests")
+
+// Opcional: habilitar previews para otimização
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")

@@ -15,15 +15,22 @@ sourceSets {
     }
     test {
         java {
-            srcDirs = ["../tests"] // permite rodar os testes do módulo tests
+            srcDirs = ["../tests"] // opcional, pode migrar para src/test/java
         }
     }
 }
 
 dependencies {
-    // Núcleo do LibGDX (necessário para ApplicationAdapter, Gdx, ShapeRenderer, Color, etc.)
+    // Núcleo do LibGDX
     api "com.badlogicgames.gdx:gdx:1.12.0"
+
+    // Box2D (já que os nativos foram incluídos)
+    implementation "com.badlogicgames.gdx:gdx-box2d:1.12.0"
 
     // Biblioteca de testes
     testImplementation "junit:junit:4.13.2"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }

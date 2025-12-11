@@ -69,35 +69,3 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:1.1.5"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
 }
-
-// Adicione no final do build.gradle (módulo android)
-import java.util.zip.ZipFile
-
-// Tarefa para gerar resumo do APK
-task chessSummary {
-    group = "verification"
-    description = "Gera um resumo do APK Chess com libs nativas e tamanho"
-
-    doLast {
-        def apkFile = file("$buildDir/outputs/apk/debug/android-debug.apk")
-        if (!apkFile.exists()) {
-            println "❌ APK não encontrado em: ${apkFile}"
-            return
-        }
-
-        println "=== Chess Build Summary ==="
-        println "📦 APK: ${apkFile.name}"
-        println "📁 Caminho: ${apkFile.absolutePath}"
-        println "📏 Tamanho: ${(apkFile.length() / (1024*1024)).round(2)} MB"
-
-        def zip = new ZipFile(apkFile)
-        def hasArmv7 = zip.entries().any { it.name.contains("lib/armeabi-v7a/libgdx.so") }
-        def hasArm64 = zip.entries().any { it.name.contains("lib/arm64-v8a/libgdx.so") }
-
-        println "🔍 Bibliotecas nativas incluídas:"
-        println "   - armeabi-v7a: ${hasArmv7 ? '✔' : '❌'}"
-        println "   - arm64-v8a: ${hasArm64 ? '✔' : '❌'}"
-
-        println "🎯 Status: ${hasArmv7 || hasArm64 ? 'Pronto para rodar' : 'Faltando nativos!'}"
-    }
-}
