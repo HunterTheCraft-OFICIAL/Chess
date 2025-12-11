@@ -1,7 +1,9 @@
 name: Gradle Wrapper Update
 
 on:
-  workflow_dispatch:
+#  workflow_dispatch:
+  push:
+
 
 permissions:
   contents: read
