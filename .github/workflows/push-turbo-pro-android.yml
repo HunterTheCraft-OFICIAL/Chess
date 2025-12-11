@@ -1,4 +1,4 @@
-name: Build (Android Push Turbo)
+name: Build (Android Push Turbo Pro)
 
 on:
   push:
@@ -8,11 +8,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: android-${{ github.ref }}
+  group: android-pro-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  android-build:
+  android-build-pro:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,6 +35,14 @@ jobs:
       # Compila o APK de Debug
       - name: Build Android APK (Debug)
         run: ./gradlew :android:assembleDebug --stacktrace --no-daemon
+
+      # Roda testes unitários
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest --stacktrace --no-daemon
+
+      # Roda Lint para verificar problemas de código/estilo
+      - name: Run Android Lint
+        run: ./gradlew lintDebug --stacktrace --no-daemon
 
       # Gera resumo do APK (console + arquivo + anotação)
       - name: APK Summary
@@ -64,11 +72,10 @@ jobs:
             echo "::error::Falha: APK não foi gerado!"
           fi
 
-      # Checa versão do LibGDX usada vs. mais recente (vai para o mesmo resumo)
+      # Checa versão do LibGDX usada vs. mais recente
       - name: Check LibGDX Version
         run: |
-          sudo apt-get update && sudo apt-get install -y jq
-          USED_VERSION=$(grep -m1 "gdxVersion" gradle.properties | cut -d'=' -f2 || echo "desconhecida")
+          USED_VERSION=$(grep "gdxVersion" gradle.properties | cut -d'=' -f2)
           LATEST_VERSION=$(curl -s "https://search.maven.org/solrsearch/select?q=g:%22com.badlogicgames.gdx%22+AND+a:%22gdx-platform%22&rows=1&wt=json" \
             | jq -r '.response.docs[0].latestVersion')
 
@@ -86,15 +93,15 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: chess-apk
+          name: chess-apk-pro
           path: android/build/outputs/apk/debug/android-debug.apk
           retention-days: 14
 
-      # Publica o resumo como artefato separado (já com info da versão)
+      # Publica o resumo como artefato separado
       - name: Upload Build Summary
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: chess-apk-summary
+          name: chess-apk-summary-pro
           path: build/reports/chess-summary.txt
           retention-days: 14
