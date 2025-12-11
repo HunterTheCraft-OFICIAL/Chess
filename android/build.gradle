@@ -41,8 +41,12 @@ repositories {
 dependencies {
     implementation project(":core")
 
-    // LibGDX
+    // LibGDX backend Android
     implementation "com.badlogicgames.gdx:gdx-backend-android:1.12.1"
+
+    // LibGDX nativos obrigatórios
+    implementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-armeabi-v7a"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-arm64-v8a"
 
     // Rhino JS engine
     implementation "org.mozilla:rhino:1.7.14"
