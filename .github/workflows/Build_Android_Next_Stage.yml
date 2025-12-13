@@ -36,11 +36,9 @@ jobs:
 
       - name: Build Android APK (Debug)
         run: ./gradlew :android:assembleDebug --stacktrace --warning-mode all --info --no-daemon
-#        run: ./gradlew :android:assembleDebug --offline --stacktrace --warning-mode all --info --no-daemon
 
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest --stacktrace --warning-mode all --info --no-daemon
-#        run: ./gradlew testDebugUnitTest --offline --stacktrace --warning-mode all --info --no-daemon
 
       # Opcional: Checar versão da LibGDX
       - name: Check LibGDX Version
