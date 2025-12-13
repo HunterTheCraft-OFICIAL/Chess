@@ -11,8 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chess">
 
+        <!-- Tela de carregamento inicial -->
         <activity
-            android:name="chess.android.AndroidLauncher"
+            android:name="chess.android.LoadingActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
@@ -21,6 +22,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Menu principal (chamado após carregamento) -->
+        <activity
+            android:name="chess.android.MainMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
+        <!-- Launcher original (pode ser usado depois para iniciar o jogo) -->
+        <activity
+            android:name="chess.android.AndroidLauncher"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 
     </application>
 </manifest>
