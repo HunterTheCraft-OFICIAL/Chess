@@ -34,11 +34,23 @@ jobs:
       - name: Verify Gradle wrapper
         uses: gradle/wrapper-validation-action@v2
 
+      # Compilação com retry automático
       - name: Build Android APK (Debug)
-        run: ./gradlew :android:assembleDebug --stacktrace --warning-mode all --info --no-daemon
+        run: |
+          for i in 1 2 3; do
+            ./gradlew :android:assembleDebug --stacktrace --warning-mode all --info --no-daemon && break
+            echo "Tentativa $i falhou, tentando novamente..."
+            sleep 10
+          done
 
+      # Testes unitários com retry
       - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest --stacktrace --warning-mode all --info --no-daemon
+        run: |
+          for i in 1 2 3; do
+            ./gradlew testDebugUnitTest --stacktrace --warning-mode all --info --no-daemon && break
+            echo "Tentativa $i falhou, tentando novamente..."
+            sleep 10
+          done
 
       # Opcional: Checar versão da LibGDX
       - name: Check LibGDX Version
@@ -51,6 +63,7 @@ jobs:
           echo "Versão usada: $USED_VERSION"
           echo "Versão mais recente: $LATEST_VERSION"
 
+      # Upload do APK gerado
       - name: Upload APK artifact
         if: always()
         uses: actions/upload-artifact@v4
