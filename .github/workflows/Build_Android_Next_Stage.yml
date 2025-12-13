@@ -34,23 +34,27 @@ jobs:
       - name: Verify Gradle wrapper
         uses: gradle/wrapper-validation-action@v2
 
-      # Compilação com retry automático
-      - name: Build Android APK (Debug)
+      # 🔍 Etapa extra: Verificar conexão com internet
+      - name: Check Internet Connectivity
+        continue-on-error: true
         run: |
-          for i in 1 2 3; do
-            ./gradlew :android:assembleDebug --stacktrace --warning-mode all --info --no-daemon && break
-            echo "Tentativa $i falhou, tentando novamente..."
-            sleep 10
+          echo "=== Testando conectividade ==="
+          sites=("https://www.google.com" "https://www.bing.com" "https://repo.maven.apache.org/maven2" "https://services.gradle.org")
+          for site in "${sites[@]}"; do
+            echo "Testando $site ..."
+            if curl -Is --max-time 10 $site | head -n 1 | grep "200\|301\|302" > /dev/null; then
+              echo "✔ Conexão OK com $site"
+            else
+              echo "⚠ Falha ao conectar em $site"
+            fi
           done
+          echo "=== Teste de conectividade concluído ==="
 
-      # Testes unitários com retry
+      - name: Build Android APK (Debug)
+        run: ./gradlew :android:assembleDebug --stacktrace --warning-mode all --info --no-daemon
+
       - name: Run Unit Tests
-        run: |
-          for i in 1 2 3; do
-            ./gradlew testDebugUnitTest --stacktrace --warning-mode all --info --no-daemon && break
-            echo "Tentativa $i falhou, tentando novamente..."
-            sleep 10
-          done
+        run: ./gradlew testDebugUnitTest --stacktrace --warning-mode all --info --no-daemon
 
       # Opcional: Checar versão da LibGDX
       - name: Check LibGDX Version
@@ -63,7 +67,6 @@ jobs:
           echo "Versão usada: $USED_VERSION"
           echo "Versão mais recente: $LATEST_VERSION"
 
-      # Upload do APK gerado
       - name: Upload APK artifact
         if: always()
         uses: actions/upload-artifact@v4
